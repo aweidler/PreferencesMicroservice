@@ -29,7 +29,6 @@ namespace PreferencesMicroservice.Cdk
 
         public AppSyncApiStack(Construct scope, string id, IStackProps? props = null) : base(scope, id, props)
         {
-            // Create DynamoDB Table
             var preferencesTable = new Table(this, "PreferencesTable", new TableProps
             {
                 TableName = "ProfileAddressAvailablePreferences",
@@ -38,7 +37,6 @@ namespace PreferencesMicroservice.Cdk
                 RemovalPolicy = RemovalPolicy.DESTROY
             });
 
-            // Create AppSync API
             var api = new GraphqlApi(this, "PreferencesApi", new GraphqlApiProps
             {
                 Name = "postnl-preferences-api",
@@ -57,11 +55,9 @@ namespace PreferencesMicroservice.Cdk
                 XrayEnabled = true
             });
 
-            // Create Lambda Functions with specific permissions
             var getPreferencesFunction = new Function(this, "GetPreferencesFunction",
                 CreateLambdaProps("PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreferences_Generated::GetPreferences", preferencesTable.TableName));
             preferencesTable.GrantReadData(getPreferencesFunction);
-
 
             var getPreferenceFunction = new Function(this, "GetPreferenceFunction",
                 CreateLambdaProps("PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreference_Generated::GetPreference", preferencesTable.TableName));
@@ -75,13 +71,12 @@ namespace PreferencesMicroservice.Cdk
                 CreateLambdaProps("PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_DeletePreference_Generated::DeletePreference", preferencesTable.TableName));
             preferencesTable.GrantReadWriteData(deletePreferenceFunction);
 
-            // Create AppSync DataSources
             var getPreferenceDataSource = api.AddLambdaDataSource("GetPreferencesDataSource", getPreferencesFunction);
             var getPreferenceByIdDataSource = api.AddLambdaDataSource("GetPreferenceByIdDataSource", getPreferenceFunction);
             var createPreferenceDataSource = api.AddLambdaDataSource("CreatePreferenceDataSource", createPreferenceFunction);
             var deletePreferenceDataSource = api.AddLambdaDataSource("DeletePreferenceDataSource", deletePreferenceFunction);
 
-            // Add Direct Lambda Resolvers
+            // Direct Lambda Resolvers
             getPreferenceDataSource.CreateResolver("listPreferencesResolver", new BaseResolverProps
             {
                 TypeName = "Query",
