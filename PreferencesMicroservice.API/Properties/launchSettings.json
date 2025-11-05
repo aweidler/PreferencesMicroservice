@@ -1,0 +1,28 @@
+{
+  "profiles": {
+    "Aspire_GetPreferences": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "exec --depsfile ./PreferencesMicroservice.Api.deps.json --runtimeconfig ./PreferencesMicroservice.Api.runtimeconfig.json %USERPROFILE%\\.dotnet\\tools\\.store\\amazon.lambda.testtool\\0.10.1\\amazon.lambda.testtool\\0.10.1\\content\\Amazon.Lambda.RuntimeSupport\\net8.0\\Amazon.Lambda.RuntimeSupport.dll PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreferences_Generated::GetPreferences",
+      "workingDirectory": ".\\bin\\$(Configuration)\\net8.0"
+    },
+    "Aspire_GetPreference": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "exec --depsfile ./PreferencesMicroservice.Api.deps.json --runtimeconfig ./PreferencesMicroservice.Api.runtimeconfig.json %USERPROFILE%\\.dotnet\\tools\\.store\\amazon.lambda.testtool\\0.10.1\\amazon.lambda.testtool\\0.10.1\\content\\Amazon.Lambda.RuntimeSupport\\net8.0\\Amazon.Lambda.RuntimeSupport.dll PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreference_Generated::GetPreference",
+      "workingDirectory": ".\\bin\\$(Configuration)\\net8.0"
+    },
+    "Aspire_CreatePreference": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "exec --depsfile ./PreferencesMicroservice.Api.deps.json --runtimeconfig ./PreferencesMicroservice.Api.runtimeconfig.json %USERPROFILE%\\.dotnet\\tools\\.store\\amazon.lambda.testtool\\0.10.1\\amazon.lambda.testtool\\0.10.1\\content\\Amazon.Lambda.RuntimeSupport\\net8.0\\Amazon.Lambda.RuntimeSupport.dll PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_CreatePreference_Generated::CreatePreference",
+      "workingDirectory": ".\\bin\\$(Configuration)\\net8.0"
+    },
+    "Aspire_DeletePreference": {
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "exec --depsfile ./PreferencesMicroservice.Api.deps.json --runtimeconfig ./PreferencesMicroservice.Api.runtimeconfig.json %USERPROFILE%\\.dotnet\\tools\\.store\\amazon.lambda.testtool\\0.10.1\\amazon.lambda.testtool\\0.10.1\\content\\Amazon.Lambda.RuntimeSupport\\net8.0\\Amazon.Lambda.RuntimeSupport.dll PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_DeletePreference_Generated::DeletePreference",
+      "workingDirectory": ".\\bin\\$(Configuration)\\net8.0"
+    }
+  }
+}

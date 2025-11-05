@@ -1,0 +1,277 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "postnl-preferences-stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "postnl-preferences-stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "postnl-preferences-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://467167263531/eu-north-1",
+      "properties": {
+        "templateFile": "postnl-preferences-stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::467167263531:role/cdk-hnb659fds-deploy-role-467167263531-eu-north-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::467167263531:role/cdk-hnb659fds-cfn-exec-role-467167263531-eu-north-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-467167263531-eu-north-1/7772cad68d2e832c536148071e5d4172b6163c751f2e9d90f62458c47550d556.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "postnl-preferences-stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::467167263531:role/cdk-hnb659fds-lookup-role-467167263531-eu-north-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "postnl-preferences-stack.assets"
+      ],
+      "metadata": {
+        "/postnl-preferences-stack/PreferencesTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "PreferencesTableC3683986"
+            }
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesTableC3683986"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiA85EF8FB"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/Schema": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiSchema949F661A"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/DefaultApiKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiDefaultApiKey82A8F7A8"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferencesDataSourceServiceRoleBEE59E23"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferencesDataSourceServiceRoleDefaultPolicyB4DC8E79"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferencesDataSource6EC074F3"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferenceByIdDataSourceServiceRole1A94B5BB"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferenceByIdDataSourceServiceRoleDefaultPolicy7AEBF885"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferenceByIdDataSourceB9AB05B3"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiCreatePreferenceDataSourceServiceRole78D8E53F"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiCreatePreferenceDataSourceServiceRoleDefaultPolicy42D47E48"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiCreatePreferenceDataSourceACFB94C5"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiDeletePreferenceDataSourceServiceRole495B6809"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiDeletePreferenceDataSourceServiceRoleDefaultPolicy84EF111D"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiDeletePreferenceDataSourceD4F1A5D6"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/listPreferencesResolver/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApilistPreferencesResolver00FE85E9"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/GetPreferenceByIdResolver/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiGetPreferenceByIdResolver6903A824"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/CreatePreferenceResolver/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiCreatePreferenceResolver4E10ECC3"
+          }
+        ],
+        "/postnl-preferences-stack/PreferencesApi/DeletePreferenceResolver/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "PreferencesApiDeletePreferenceResolver3970F234"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferencesFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferencesFunctionServiceRoleAACB709B"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferencesFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferencesFunctionServiceRoleDefaultPolicy086AEF9D"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferencesFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferencesFunction681EF094"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferenceFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferenceFunctionServiceRole3B29DAE5"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferenceFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferenceFunctionServiceRoleDefaultPolicyA89741FC"
+          }
+        ],
+        "/postnl-preferences-stack/GetPreferenceFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetPreferenceFunction9069A976"
+          }
+        ],
+        "/postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreatePreferenceFunctionServiceRole3FAD8BAC"
+          }
+        ],
+        "/postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreatePreferenceFunctionServiceRoleDefaultPolicyF05A6347"
+          }
+        ],
+        "/postnl-preferences-stack/CreatePreferenceFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CreatePreferenceFunction75C32658"
+          }
+        ],
+        "/postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeletePreferenceFunctionServiceRoleF1C0CBF3"
+          }
+        ],
+        "/postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeletePreferenceFunctionServiceRoleDefaultPolicyA15960D8"
+          }
+        ],
+        "/postnl-preferences-stack/DeletePreferenceFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DeletePreferenceFunctionF5A7771B"
+          }
+        ],
+        "/postnl-preferences-stack/GraphQLAPIURL": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GraphQLAPIURL"
+          }
+        ],
+        "/postnl-preferences-stack/GraphQLAPIKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GraphQLAPIKey"
+          }
+        ],
+        "/postnl-preferences-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/postnl-preferences-stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/postnl-preferences-stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "postnl-preferences-stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

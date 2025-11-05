@@ -1,0 +1,1680 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "postnl-preferences-stack": {
+        "id": "postnl-preferences-stack",
+        "path": "postnl-preferences-stack",
+        "children": {
+          "PreferencesTable": {
+            "id": "PreferencesTable",
+            "path": "postnl-preferences-stack/PreferencesTable",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/PreferencesTable/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "Id",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "billingMode": "PAY_PER_REQUEST",
+                    "keySchema": [
+                      {
+                        "attributeName": "Id",
+                        "keyType": "HASH"
+                      }
+                    ],
+                    "tableName": "ProfileAddressAvailablePreferences"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_dynamodb.CfnTable",
+                  "version": "2.134.0"
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "postnl-preferences-stack/PreferencesTable/ScalingRole",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_dynamodb.Table",
+              "version": "2.134.0"
+            }
+          },
+          "PreferencesApi": {
+            "id": "PreferencesApi",
+            "path": "postnl-preferences-stack/PreferencesApi",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/PreferencesApi/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLApi",
+                  "aws:cdk:cloudformation:props": {
+                    "authenticationType": "API_KEY",
+                    "name": "postnl-preferences-api",
+                    "xrayEnabled": true
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLApi",
+                  "version": "2.134.0"
+                }
+              },
+              "Schema": {
+                "id": "Schema",
+                "path": "postnl-preferences-stack/PreferencesApi/Schema",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::GraphQLSchema",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "PreferencesApiA85EF8FB",
+                        "ApiId"
+                      ]
+                    },
+                    "definition": "﻿# Queries for fetching data\r\ntype Query {\r\n\tgetPreferenceById(id: ID!): ProfileAddressAvailablePreference\r\n\tlistPreferences: [ProfileAddressAvailablePreference]\r\n}\r\n\r\n# Mutations for data manipulation\r\ntype Mutation {\r\n\tcreatePreference(\r\n\t\thouseNumber: String!\r\n\t\tpostalCode: String!\r\n\t\tstreet: String!\r\n\t\tcity: String!\r\n\t\tcountry: String!\r\n\t\tnotAtHome: NotAtHomePreferenceInput\r\n\t\tdeliveryMethod: DeliveryMethod): ProfileAddressAvailablePreference\r\n\tdeletePreference(id: ID!): ProfileAddressAvailablePreference\r\n}\r\n\r\ninput NotAtHomePreferenceInput {\r\n\tpostNLPoint: String\r\n\tparcelLocker: String\r\n}\r\n\r\ntype ProfileAddressAvailablePreference {\r\n\tid: ID!\r\n\thouseNumber: String\r\n\tpostalCode: String\r\n\tstreet: String\r\n\tcity: String\r\n\tcountry: String\r\n\tnotAtHome: NotAtHomePreference\r\n\tdeliveryMethod: DeliveryMethod\r\n}\r\n\r\ntype NotAtHomePreference {\r\n\tpostNLPoint: String\r\n\tparcelLocker: String\r\n}\r\n\r\nenum DeliveryMethod {\r\n\tNone\r\n    Address\r\n    ParcelLocker\r\n    PostNLPunt\r\n}\r\n\r\nschema {\r\n\tquery: Query\r\n\tmutation: Mutation\r\n}"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnGraphQLSchema",
+                  "version": "2.134.0"
+                }
+              },
+              "DefaultApiKey": {
+                "id": "DefaultApiKey",
+                "path": "postnl-preferences-stack/PreferencesApi/DefaultApiKey",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::AppSync::ApiKey",
+                  "aws:cdk:cloudformation:props": {
+                    "apiId": {
+                      "Fn::GetAtt": [
+                        "PreferencesApiA85EF8FB",
+                        "ApiId"
+                      ]
+                    },
+                    "expires": 1764900386
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.CfnApiKey",
+                  "version": "2.134.0"
+                }
+              },
+              "LogGroup": {
+                "id": "LogGroup",
+                "path": "postnl-preferences-stack/PreferencesApi/LogGroup",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.134.0"
+                }
+              },
+              "GetPreferencesDataSource": {
+                "id": "GetPreferencesDataSource",
+                "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "appsync.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "GetPreferencesFunction681EF094",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "GetPreferencesFunction681EF094",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              ":*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "PreferencesApiGetPreferencesDataSourceServiceRoleDefaultPolicyB4DC8E79",
+                                "roles": [
+                                  {
+                                    "Ref": "PreferencesApiGetPreferencesDataSourceServiceRoleBEE59E23"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.134.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/GetPreferencesDataSource/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "lambdaConfig": {
+                          "lambdaFunctionArn": {
+                            "Fn::GetAtt": [
+                              "GetPreferencesFunction681EF094",
+                              "Arn"
+                            ]
+                          }
+                        },
+                        "name": "GetPreferencesDataSource",
+                        "serviceRoleArn": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiGetPreferencesDataSourceServiceRoleBEE59E23",
+                            "Arn"
+                          ]
+                        },
+                        "type": "AWS_LAMBDA"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.LambdaDataSource",
+                  "version": "2.134.0"
+                }
+              },
+              "GetPreferenceByIdDataSource": {
+                "id": "GetPreferenceByIdDataSource",
+                "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "appsync.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "GetPreferenceFunction9069A976",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "GetPreferenceFunction9069A976",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              ":*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "PreferencesApiGetPreferenceByIdDataSourceServiceRoleDefaultPolicy7AEBF885",
+                                "roles": [
+                                  {
+                                    "Ref": "PreferencesApiGetPreferenceByIdDataSourceServiceRole1A94B5BB"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.134.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdDataSource/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "lambdaConfig": {
+                          "lambdaFunctionArn": {
+                            "Fn::GetAtt": [
+                              "GetPreferenceFunction9069A976",
+                              "Arn"
+                            ]
+                          }
+                        },
+                        "name": "GetPreferenceByIdDataSource",
+                        "serviceRoleArn": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiGetPreferenceByIdDataSourceServiceRole1A94B5BB",
+                            "Arn"
+                          ]
+                        },
+                        "type": "AWS_LAMBDA"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.LambdaDataSource",
+                  "version": "2.134.0"
+                }
+              },
+              "CreatePreferenceDataSource": {
+                "id": "CreatePreferenceDataSource",
+                "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "appsync.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "CreatePreferenceFunction75C32658",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "CreatePreferenceFunction75C32658",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              ":*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "PreferencesApiCreatePreferenceDataSourceServiceRoleDefaultPolicy42D47E48",
+                                "roles": [
+                                  {
+                                    "Ref": "PreferencesApiCreatePreferenceDataSourceServiceRole78D8E53F"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.134.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceDataSource/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "lambdaConfig": {
+                          "lambdaFunctionArn": {
+                            "Fn::GetAtt": [
+                              "CreatePreferenceFunction75C32658",
+                              "Arn"
+                            ]
+                          }
+                        },
+                        "name": "CreatePreferenceDataSource",
+                        "serviceRoleArn": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiCreatePreferenceDataSourceServiceRole78D8E53F",
+                            "Arn"
+                          ]
+                        },
+                        "type": "AWS_LAMBDA"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.LambdaDataSource",
+                  "version": "2.134.0"
+                }
+              },
+              "DeletePreferenceDataSource": {
+                "id": "DeletePreferenceDataSource",
+                "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource",
+                "children": {
+                  "ServiceRole": {
+                    "id": "ServiceRole",
+                    "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole",
+                    "children": {
+                      "ImportServiceRole": {
+                        "id": "ImportServiceRole",
+                        "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/ImportServiceRole",
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.Resource",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                          "aws:cdk:cloudformation:props": {
+                            "assumeRolePolicyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Principal": {
+                                    "Service": "appsync.amazonaws.com"
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                          "version": "2.134.0"
+                        }
+                      },
+                      "DefaultPolicy": {
+                        "id": "DefaultPolicy",
+                        "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/DefaultPolicy",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/ServiceRole/DefaultPolicy/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                              "aws:cdk:cloudformation:props": {
+                                "policyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "lambda:InvokeFunction",
+                                      "Effect": "Allow",
+                                      "Resource": [
+                                        {
+                                          "Fn::GetAtt": [
+                                            "DeletePreferenceFunctionF5A7771B",
+                                            "Arn"
+                                          ]
+                                        },
+                                        {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              {
+                                                "Fn::GetAtt": [
+                                                  "DeletePreferenceFunctionF5A7771B",
+                                                  "Arn"
+                                                ]
+                                              },
+                                              ":*"
+                                            ]
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                },
+                                "policyName": "PreferencesApiDeletePreferenceDataSourceServiceRoleDefaultPolicy84EF111D",
+                                "roles": [
+                                  {
+                                    "Ref": "PreferencesApiDeletePreferenceDataSourceServiceRole495B6809"
+                                  }
+                                ]
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                              "version": "2.134.0"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.Policy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Role",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceDataSource/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::DataSource",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "lambdaConfig": {
+                          "lambdaFunctionArn": {
+                            "Fn::GetAtt": [
+                              "DeletePreferenceFunctionF5A7771B",
+                              "Arn"
+                            ]
+                          }
+                        },
+                        "name": "DeletePreferenceDataSource",
+                        "serviceRoleArn": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiDeletePreferenceDataSourceServiceRole495B6809",
+                            "Arn"
+                          ]
+                        },
+                        "type": "AWS_LAMBDA"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnDataSource",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.LambdaDataSource",
+                  "version": "2.134.0"
+                }
+              },
+              "listPreferencesResolver": {
+                "id": "listPreferencesResolver",
+                "path": "postnl-preferences-stack/PreferencesApi/listPreferencesResolver",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/listPreferencesResolver/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "dataSourceName": "GetPreferencesDataSource",
+                        "fieldName": "listPreferences",
+                        "kind": "UNIT",
+                        "typeName": "Query"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.Resolver",
+                  "version": "2.134.0"
+                }
+              },
+              "GetPreferenceByIdResolver": {
+                "id": "GetPreferenceByIdResolver",
+                "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdResolver",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/GetPreferenceByIdResolver/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "dataSourceName": "GetPreferenceByIdDataSource",
+                        "fieldName": "getPreferenceById",
+                        "kind": "UNIT",
+                        "typeName": "Query"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.Resolver",
+                  "version": "2.134.0"
+                }
+              },
+              "CreatePreferenceResolver": {
+                "id": "CreatePreferenceResolver",
+                "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceResolver",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/CreatePreferenceResolver/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "dataSourceName": "CreatePreferenceDataSource",
+                        "fieldName": "createPreference",
+                        "kind": "UNIT",
+                        "typeName": "Mutation"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.Resolver",
+                  "version": "2.134.0"
+                }
+              },
+              "DeletePreferenceResolver": {
+                "id": "DeletePreferenceResolver",
+                "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceResolver",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/PreferencesApi/DeletePreferenceResolver/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::AppSync::Resolver",
+                      "aws:cdk:cloudformation:props": {
+                        "apiId": {
+                          "Fn::GetAtt": [
+                            "PreferencesApiA85EF8FB",
+                            "ApiId"
+                          ]
+                        },
+                        "dataSourceName": "DeletePreferenceDataSource",
+                        "fieldName": "deletePreference",
+                        "kind": "UNIT",
+                        "typeName": "Mutation"
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_appsync.CfnResolver",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_appsync.Resolver",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_appsync.GraphqlApi",
+              "version": "2.134.0"
+            }
+          },
+          "GetPreferencesFunction": {
+            "id": "GetPreferencesFunction",
+            "path": "postnl-preferences-stack/GetPreferencesFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "postnl-preferences-stack/GetPreferencesFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "postnl-preferences-stack/GetPreferencesFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/GetPreferencesFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "postnl-preferences-stack/GetPreferencesFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/GetPreferencesFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "dynamodb:BatchGetItem",
+                                    "dynamodb:ConditionCheckItem",
+                                    "dynamodb:DescribeTable",
+                                    "dynamodb:GetItem",
+                                    "dynamodb:GetRecords",
+                                    "dynamodb:GetShardIterator",
+                                    "dynamodb:Query",
+                                    "dynamodb:Scan"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "PreferencesTableC3683986",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Ref": "AWS::NoValue"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "GetPreferencesFunctionServiceRoleDefaultPolicy086AEF9D",
+                            "roles": [
+                              {
+                                "Ref": "GetPreferencesFunctionServiceRoleAACB709B"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.134.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "postnl-preferences-stack/GetPreferencesFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "postnl-preferences-stack/GetPreferencesFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "postnl-preferences-stack/GetPreferencesFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.134.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/GetPreferencesFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-467167263531-eu-north-1",
+                      "s3Key": "4ced00936a5ec9f7b140038ad86c8ca57ed552ec46cf73409c0cc4bdac1b387c.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "DYNAMODB_TABLE": {
+                          "Ref": "PreferencesTableC3683986"
+                        },
+                        "POWERTOOLS_SERVICE_NAME": "PreferencesMicroservice",
+                        "POWERTOOLS_METRICS_NAMESPACE": "PreferencesMicroservice"
+                      }
+                    },
+                    "handler": "PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreferences_Generated::GetPreferences",
+                    "memorySize": 256,
+                    "role": {
+                      "Fn::GetAtt": [
+                        "GetPreferencesFunctionServiceRoleAACB709B",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "dotnet8",
+                    "timeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.134.0"
+            }
+          },
+          "GetPreferenceFunction": {
+            "id": "GetPreferenceFunction",
+            "path": "postnl-preferences-stack/GetPreferenceFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "postnl-preferences-stack/GetPreferenceFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "postnl-preferences-stack/GetPreferenceFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/GetPreferenceFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "postnl-preferences-stack/GetPreferenceFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/GetPreferenceFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "dynamodb:BatchGetItem",
+                                    "dynamodb:ConditionCheckItem",
+                                    "dynamodb:DescribeTable",
+                                    "dynamodb:GetItem",
+                                    "dynamodb:GetRecords",
+                                    "dynamodb:GetShardIterator",
+                                    "dynamodb:Query",
+                                    "dynamodb:Scan"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "PreferencesTableC3683986",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Ref": "AWS::NoValue"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "GetPreferenceFunctionServiceRoleDefaultPolicyA89741FC",
+                            "roles": [
+                              {
+                                "Ref": "GetPreferenceFunctionServiceRole3B29DAE5"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.134.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "postnl-preferences-stack/GetPreferenceFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "postnl-preferences-stack/GetPreferenceFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "postnl-preferences-stack/GetPreferenceFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.134.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/GetPreferenceFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-467167263531-eu-north-1",
+                      "s3Key": "4ced00936a5ec9f7b140038ad86c8ca57ed552ec46cf73409c0cc4bdac1b387c.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "DYNAMODB_TABLE": {
+                          "Ref": "PreferencesTableC3683986"
+                        },
+                        "POWERTOOLS_SERVICE_NAME": "PreferencesMicroservice",
+                        "POWERTOOLS_METRICS_NAMESPACE": "PreferencesMicroservice"
+                      }
+                    },
+                    "handler": "PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_GetPreference_Generated::GetPreference",
+                    "memorySize": 256,
+                    "role": {
+                      "Fn::GetAtt": [
+                        "GetPreferenceFunctionServiceRole3B29DAE5",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "dotnet8",
+                    "timeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.134.0"
+            }
+          },
+          "CreatePreferenceFunction": {
+            "id": "CreatePreferenceFunction",
+            "path": "postnl-preferences-stack/CreatePreferenceFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "postnl-preferences-stack/CreatePreferenceFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/CreatePreferenceFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "dynamodb:BatchGetItem",
+                                    "dynamodb:BatchWriteItem",
+                                    "dynamodb:ConditionCheckItem",
+                                    "dynamodb:DeleteItem",
+                                    "dynamodb:DescribeTable",
+                                    "dynamodb:GetItem",
+                                    "dynamodb:GetRecords",
+                                    "dynamodb:GetShardIterator",
+                                    "dynamodb:PutItem",
+                                    "dynamodb:Query",
+                                    "dynamodb:Scan",
+                                    "dynamodb:UpdateItem"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "PreferencesTableC3683986",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Ref": "AWS::NoValue"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "CreatePreferenceFunctionServiceRoleDefaultPolicyF05A6347",
+                            "roles": [
+                              {
+                                "Ref": "CreatePreferenceFunctionServiceRole3FAD8BAC"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.134.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "postnl-preferences-stack/CreatePreferenceFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "postnl-preferences-stack/CreatePreferenceFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "postnl-preferences-stack/CreatePreferenceFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.134.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/CreatePreferenceFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-467167263531-eu-north-1",
+                      "s3Key": "4ced00936a5ec9f7b140038ad86c8ca57ed552ec46cf73409c0cc4bdac1b387c.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "DYNAMODB_TABLE": {
+                          "Ref": "PreferencesTableC3683986"
+                        },
+                        "POWERTOOLS_SERVICE_NAME": "PreferencesMicroservice",
+                        "POWERTOOLS_METRICS_NAMESPACE": "PreferencesMicroservice"
+                      }
+                    },
+                    "handler": "PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_CreatePreference_Generated::CreatePreference",
+                    "memorySize": 256,
+                    "role": {
+                      "Fn::GetAtt": [
+                        "CreatePreferenceFunctionServiceRole3FAD8BAC",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "dotnet8",
+                    "timeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.134.0"
+            }
+          },
+          "DeletePreferenceFunction": {
+            "id": "DeletePreferenceFunction",
+            "path": "postnl-preferences-stack/DeletePreferenceFunction",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "postnl-preferences-stack/DeletePreferenceFunction/ServiceRole",
+                "children": {
+                  "ImportServiceRole": {
+                    "id": "ImportServiceRole",
+                    "path": "postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/ImportServiceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "postnl-preferences-stack/DeletePreferenceFunction/ServiceRole/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "dynamodb:BatchGetItem",
+                                    "dynamodb:BatchWriteItem",
+                                    "dynamodb:ConditionCheckItem",
+                                    "dynamodb:DeleteItem",
+                                    "dynamodb:DescribeTable",
+                                    "dynamodb:GetItem",
+                                    "dynamodb:GetRecords",
+                                    "dynamodb:GetShardIterator",
+                                    "dynamodb:PutItem",
+                                    "dynamodb:Query",
+                                    "dynamodb:Scan",
+                                    "dynamodb:UpdateItem"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "PreferencesTableC3683986",
+                                        "Arn"
+                                      ]
+                                    },
+                                    {
+                                      "Ref": "AWS::NoValue"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "DeletePreferenceFunctionServiceRoleDefaultPolicyA15960D8",
+                            "roles": [
+                              {
+                                "Ref": "DeletePreferenceFunctionServiceRoleF1C0CBF3"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "aws-cdk-lib.aws_iam.CfnPolicy",
+                          "version": "2.134.0"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.Policy",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.134.0"
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "postnl-preferences-stack/DeletePreferenceFunction/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "postnl-preferences-stack/DeletePreferenceFunction/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.134.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "postnl-preferences-stack/DeletePreferenceFunction/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.134.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.134.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "postnl-preferences-stack/DeletePreferenceFunction/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-467167263531-eu-north-1",
+                      "s3Key": "4ced00936a5ec9f7b140038ad86c8ca57ed552ec46cf73409c0cc4bdac1b387c.zip"
+                    },
+                    "environment": {
+                      "variables": {
+                        "DYNAMODB_TABLE": {
+                          "Ref": "PreferencesTableC3683986"
+                        },
+                        "POWERTOOLS_SERVICE_NAME": "PreferencesMicroservice",
+                        "POWERTOOLS_METRICS_NAMESPACE": "PreferencesMicroservice"
+                      }
+                    },
+                    "handler": "PreferencesMicroservice.API::PreferencesMicroservice.API.Functions_DeletePreference_Generated::DeletePreference",
+                    "memorySize": 256,
+                    "role": {
+                      "Fn::GetAtt": [
+                        "DeletePreferenceFunctionServiceRoleF1C0CBF3",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "dotnet8",
+                    "timeout": 30
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.134.0"
+            }
+          },
+          "GraphQLAPIURL": {
+            "id": "GraphQLAPIURL",
+            "path": "postnl-preferences-stack/GraphQLAPIURL",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.134.0"
+            }
+          },
+          "GraphQLAPIKey": {
+            "id": "GraphQLAPIKey",
+            "path": "postnl-preferences-stack/GraphQLAPIKey",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.134.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "postnl-preferences-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "postnl-preferences-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.134.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.4.2"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "postnl-preferences-stack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.134.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "postnl-preferences-stack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.134.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.134.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.4.2"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.134.0"
+    }
+  }
+}

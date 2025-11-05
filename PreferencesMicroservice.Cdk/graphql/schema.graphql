@@ -1,0 +1,51 @@
+﻿# Queries for fetching data
+type Query {
+	getPreferenceById(id: ID!): ProfileAddressAvailablePreference
+	listPreferences: [ProfileAddressAvailablePreference]
+}
+
+# Mutations for data manipulation
+type Mutation {
+	createPreference(
+		houseNumber: String!
+		postalCode: String!
+		street: String!
+		city: String!
+		country: String!
+		notAtHome: NotAtHomePreferenceInput
+		deliveryMethod: DeliveryMethod): ProfileAddressAvailablePreference
+	deletePreference(id: ID!): ProfileAddressAvailablePreference
+}
+
+input NotAtHomePreferenceInput {
+	postNLPoint: String
+	parcelLocker: String
+}
+
+type ProfileAddressAvailablePreference {
+	id: ID!
+	houseNumber: String
+	postalCode: String
+	street: String
+	city: String
+	country: String
+	notAtHome: NotAtHomePreference
+	deliveryMethod: DeliveryMethod
+}
+
+type NotAtHomePreference {
+	postNLPoint: String
+	parcelLocker: String
+}
+
+enum DeliveryMethod {
+	None
+    Address
+    ParcelLocker
+    PostNLPunt
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+}
